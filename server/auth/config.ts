@@ -4,6 +4,7 @@ import { authenticateUser } from "@/server/services/auth";
 import { getEnv } from "@/lib/env";
 
 export const authConfig = {
+  trustHost: true,
   providers: [
     Credentials({
       name: "Credentials",
