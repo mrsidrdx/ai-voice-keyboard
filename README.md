@@ -47,7 +47,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/ai-voice-keyboard.git
+   git clone https://github.com/mrsidrdx/ai-voice-keyboard.git
    cd ai-voice-keyboard
    ```
 
