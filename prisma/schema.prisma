@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String           @id @default(uuid())
+  name         String           @db.VarChar(100)
+  email        String           @unique @db.VarChar(255)
+  passwordHash String           @map("password_hash")
+  createdAt    DateTime         @default(now()) @map("created_at")
+  transcriptions Transcription[]
+  dictionaryItems DictionaryItem[]
+
+  @@map("users")
+}
+
+model Transcription {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  text      String   @db.Text
+  audioUrl  String?  @map("audio_url") @db.Text
+  duration  Int      // seconds
+  status    TranscriptionStatus @default(PROCESSING)
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("transcriptions")
+}
+
+model DictionaryItem {
+  id                String   @id @default(uuid())
+  userId            String   @map("user_id")
+  term              String   @db.VarChar(255)
+  preferredSpelling String   @map("preferred_spelling") @db.VarChar(255)
+  createdAt         DateTime @default(now()) @map("created_at")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, term])
+  @@index([userId])
+  @@map("dictionary_items")
+}
+
+enum TranscriptionStatus {
+  PROCESSING
+  DONE
+  ERROR
+}
