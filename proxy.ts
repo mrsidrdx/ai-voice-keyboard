@@ -1,31 +1,27 @@
+import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
 
 export async function proxy(request: NextRequest) {
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-
+  const session = await auth();
   const { pathname } = request.nextUrl;
+  const isLoggedIn = !!session;
 
-  // Public routes
-  const publicRoutes = ["/login", "/signup"];
-  const isPublicRoute = publicRoutes.includes(pathname);
+  // Public routes that don't require authentication
+  const isPublicRoute = pathname === "/login" || pathname === "/signup";
 
-  // Dashboard routes
-  const isDashboardRoute = pathname.startsWith("/dashboard");
+  // Protected routes that require authentication
+  const isProtectedRoute = pathname.startsWith("/dashboard");
 
-  // If accessing dashboard without auth, redirect to login
-  if (isDashboardRoute && !token) {
+  // If trying to access protected route without auth, redirect to login
+  if (isProtectedRoute && !isLoggedIn) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // If accessing auth pages while logged in, redirect to dashboard
-  if (isPublicRoute && token) {
+  // If trying to access auth pages while logged in, redirect to dashboard
+  if (isPublicRoute && isLoggedIn) {
     return NextResponse.redirect(new URL("/dashboard/dictate", request.url));
   }
 

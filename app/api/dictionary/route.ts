@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser } from "@/server/auth/session";
+import { auth } from "@/auth";
 import {
   getUserDictionary,
   createDictionaryItem,
@@ -14,8 +14,8 @@ const createDictionarySchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
+    const session = await auth();
+    if (!session?.user) {
       return NextResponse.json(
         {
           ok: false,
@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
         { status: 401 }
       );
     }
+    const user = session.user;
 
     const result = await getUserDictionary(user.id);
 
@@ -58,8 +59,8 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
+    const session = await auth();
+    if (!session?.user) {
       return NextResponse.json(
         {
           ok: false,
@@ -68,6 +69,7 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
+    const user = session.user;
 
     const body = await request.json();
     const parsed = createDictionarySchema.safeParse(body);

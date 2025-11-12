@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/server/auth/session";
+import { auth } from "@/auth";
 
 export default async function Home() {
-  const session = await getSession();
+  const session = await auth();
 
   if (session?.user) {
     redirect("/dashboard/dictate");

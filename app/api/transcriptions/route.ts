@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser } from "@/server/auth/session";
+import { auth } from "@/auth";
 import {
   createTranscription,
   getUserTranscriptions,
@@ -20,8 +20,8 @@ const transcriptionSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
+    const session = await auth();
+    if (!session?.user) {
       return NextResponse.json(
         {
           ok: false,
@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
         { status: 401 }
       );
     }
+    const user = session.user;
 
     const searchParams = request.nextUrl.searchParams;
     const limit = Number.parseInt(searchParams.get("limit") ?? "50", 10);
@@ -68,8 +69,8 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
+    const session = await auth();
+    if (!session?.user) {
       return NextResponse.json(
         {
           ok: false,
@@ -78,6 +79,7 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
+    const user = session.user;
 
     const body = await request.json();
     const parsed = transcriptionSchema.safeParse(body);

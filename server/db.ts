@@ -18,8 +18,8 @@ if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = db;
 }
 
-// Graceful shutdown
-if (typeof process !== "undefined") {
+// Graceful shutdown - only in Node.js runtime (not Edge Runtime)
+if (typeof process !== "undefined" && process.env.NEXT_RUNTIME !== "edge") {
   process.on("beforeExit", async () => {
     await db.$disconnect();
     logger.info("Database connection closed");

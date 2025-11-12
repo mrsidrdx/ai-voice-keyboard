@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/server/auth/session";
+import { auth } from "@/auth";
 import { deleteTranscription } from "@/server/services/transcription";
 import { logger } from "@/lib/logger";
 
@@ -8,18 +8,19 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
+  const session = await auth();
+  if (!session?.user) {
       return NextResponse.json(
         {
           ok: false,
           error: { code: "UNAUTHORIZED", message: "Not authenticated" },
         },
-        { status: 401 }
-      );
-    }
+      { status: 401 }
+    );
+  }
+  const user = session.user;
 
-    const { id } = await params;
+  const { id } = await params;
     const result = await deleteTranscription(user.id, id);
 
     if (!result.ok) {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { getCurrentUser } from "@/server/auth/session";
+import { auth } from "@/auth";
 import {
   updateDictionaryItem,
   deleteDictionaryItem,
@@ -17,8 +17,8 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
+    const session = await auth();
+    if (!session?.user) {
       return NextResponse.json(
         {
           ok: false,
@@ -27,6 +27,7 @@ export async function PUT(
         { status: 401 }
       );
     }
+    const user = session.user;
 
     const { id } = await params;
     const body = await request.json();
@@ -97,8 +98,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
+    const session = await auth();
+    if (!session?.user) {
       return NextResponse.json(
         {
           ok: false,
@@ -107,6 +108,7 @@ export async function DELETE(
         { status: 401 }
       );
     }
+    const user = session.user;
 
     const { id } = await params;
     const result = await deleteDictionaryItem(user.id, id);
