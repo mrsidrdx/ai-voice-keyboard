@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,6 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session, status, update } = useSession();
   const { toast } = useToast();
@@ -23,9 +22,12 @@ function LoginForm() {
   useEffect(() => {
     if (status === "authenticated" && session) {
       const callbackUrl = searchParams.get("callbackUrl") || "/dashboard/dictate";
-      router.push(callbackUrl);
+      const redirectUrl = callbackUrl.startsWith("http")
+        ? callbackUrl
+        : `${globalThis.location.origin}${callbackUrl}`;
+      globalThis.location.replace(redirectUrl);
     }
-  }, [status, session, router, searchParams]);
+  }, [status, session, searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +41,7 @@ function LoginForm() {
         email,
         password,
         redirect: false,
+        callbackUrl,
       });
 
       if (result?.error) {
@@ -54,11 +57,18 @@ function LoginForm() {
       // Update session to ensure it's available
       await update();
       
-      // Use window.location for reliable redirect in production
-      // This ensures cookies are set before navigation and middleware can verify auth
-      // The redirect callback in NextAuth config will handle the callbackUrl
-      window.location.href = callbackUrl;
-    } catch (error) {
+      // Small delay to ensure cookies are set
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      
+      // Construct absolute URL if callbackUrl is relative
+      const redirectUrl = callbackUrl.startsWith("http")
+        ? callbackUrl
+        : `${globalThis.location.origin}${callbackUrl}`;
+      
+      // Use replace instead of href to avoid adding to history
+      // This ensures a clean redirect in production
+      globalThis.location.replace(redirectUrl);
+    } catch {
       toast({
         title: "Error",
         description: "An unexpected error occurred",
@@ -106,7 +116,7 @@ function LoginForm() {
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">
-          <span className="text-muted-foreground">Don't have an account? </span>
+          <span className="text-muted-foreground">Don&apos;t have an account? </span>
           <Link href="/signup" className="text-primary hover:underline">
             Sign up
           </Link>

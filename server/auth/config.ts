@@ -3,6 +3,9 @@ import Credentials from "next-auth/providers/credentials";
 import { authenticateUser } from "@/server/services/auth";
 import { getEnv } from "@/lib/env";
 
+const env = getEnv();
+const isProduction = env.NODE_ENV === "production";
+
 export const authConfig = {
   trustHost: true,
   providers: [
@@ -36,10 +39,37 @@ export const authConfig = {
   ],
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
     signIn: "/login",
     signOut: "/login",
+  },
+  cookies: {
+    sessionToken: {
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: isProduction,
+      },
+    },
+    callbackUrl: {
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: isProduction,
+      },
+    },
+    csrfToken: {
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: isProduction,
+      },
+    },
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -67,6 +97,6 @@ export const authConfig = {
       return `${baseUrl}/dashboard/dictate`;
     },
   },
-  secret: getEnv().NEXTAUTH_SECRET,
+  secret: env.NEXTAUTH_SECRET,
 } satisfies NextAuthConfig;
 
