@@ -52,11 +52,19 @@ export const authConfig = {
     },
     async session({ session, token }) {
       if (session.user && token) {
-        session.user.id = token.id as string;
-        session.user.email = (token.email as string) ?? "";
-        session.user.name = (token.name as string) ?? "";
+        session.user.id = token.id ?? "";
+        session.user.email = token.email ?? "";
+        session.user.name = token.name ?? "";
       }
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      // Handle relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Handle same-origin URLs
+      if (new URL(url).origin === baseUrl) return url;
+      // Default redirect to dashboard
+      return `${baseUrl}/dashboard/dictate`;
     },
   },
   secret: getEnv().NEXTAUTH_SECRET,

@@ -6,7 +6,7 @@ const envSchema = z.object({
   
   // NextAuth
   NEXTAUTH_SECRET: z.string().min(32),
-  NEXTAUTH_URL: z.url().optional(),
+  NEXTAUTH_URL: z.url(),
   
   // OpenAI
   OPENAI_API_KEY: z.string().min(1),
