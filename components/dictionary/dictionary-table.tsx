@@ -113,10 +113,10 @@ export function DictionaryTable({
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-[var(--radius-lg)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))] to-[hsl(var(--mist))] p-6 shadow-md"
+        className="rounded-[var(--radius-lg)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))]/95 to-[hsl(var(--mist))]/80 p-6 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300"
       >
         <h3 className="text-sm font-semibold text-[hsl(var(--text))] mb-4 flex items-center gap-2">
-          <Plus className="h-4 w-4" />
+          <Plus className="h-4 w-4 text-[hsl(var(--brand-500))]" />
           Add New Term
         </h3>
         <div className="flex flex-col sm:flex-row gap-3">
@@ -137,7 +137,7 @@ export function DictionaryTable({
           <Button
             onClick={handleAdd}
             disabled={isAdding || !newTerm || !newSpelling}
-            className="rounded-[var(--radius-md)] bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] hover:from-[hsl(var(--brand-400))] hover:to-[hsl(var(--brand-500))] whitespace-nowrap"
+            className="rounded-[var(--radius-md)] bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] hover:from-[hsl(var(--brand-400))] hover:to-[hsl(var(--brand-500))] whitespace-nowrap shadow-md hover:shadow-lg"
           >
             {isAdding ? (
               <>
@@ -188,8 +188,8 @@ export function DictionaryTable({
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.3, delay: index * 0.03 }}
                 className={cn(
-                  "group relative rounded-[var(--radius-lg)] border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-4 shadow-sm hover:shadow-md transition-all duration-200",
-                  editingId === item.id && "ring-2 ring-[hsl(var(--brand-500))]/20"
+                  "group relative rounded-[var(--radius-lg)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))]/95 to-[hsl(var(--muted))]/50 p-4 shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-sm",
+                  editingId === item.id && "ring-2 ring-[hsl(var(--brand-500))]/30 shadow-xl"
                 )}
               >
                 {editingId === item.id ? (
@@ -237,7 +237,7 @@ export function DictionaryTable({
                         </span>
                       </div>
                     </div>
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                     <Button
                       variant="ghost"
                       size="icon"

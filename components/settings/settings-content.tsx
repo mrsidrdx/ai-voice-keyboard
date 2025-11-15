@@ -31,15 +31,15 @@ export function SettingsContent({ userName, userEmail }: SettingsContentProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
-        className="rounded-[var(--radius-xl)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))] to-[hsl(var(--mist))] p-6 shadow-md overflow-hidden relative"
+        className="rounded-[var(--radius-xl)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))]/95 to-[hsl(var(--mist))]/80 p-6 shadow-lg overflow-hidden relative backdrop-blur-sm hover:shadow-xl transition-all duration-300"
       >
         {/* Decorative gradient */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[hsl(var(--brand-500))]/5 to-[hsl(var(--accent))]/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[hsl(var(--brand-500))]/8 to-[hsl(var(--accent))]/8 rounded-full blur-3xl" />
         
         <div className="relative">
           <div className="flex items-center gap-3 mb-6">
             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] flex items-center justify-center shadow-lg">
-              <User className="h-5 w-5 text-white" />
+              <User className="h-5 w-5 text-white drop-shadow-sm" />
             </div>
             <div>
               <h2 className="text-lg font-semibold text-[hsl(var(--text))]">Account Information</h2>
@@ -52,9 +52,9 @@ export function SettingsContent({ userName, userEmail }: SettingsContentProps) {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="flex items-start gap-3 p-4 rounded-[var(--radius-lg)] bg-[hsl(var(--surface))] border border-[hsl(var(--border))]"
+              className="flex items-start gap-3 p-4 rounded-[var(--radius-lg)] bg-[hsl(var(--surface))]/80 backdrop-blur-sm border border-[hsl(var(--border))] hover:shadow-md transition-all duration-300"
             >
-              <div className="h-9 w-9 rounded-lg bg-[hsl(var(--muted))] flex items-center justify-center flex-shrink-0">
+              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-[hsl(var(--muted))] to-[hsl(var(--cloud))] flex items-center justify-center flex-shrink-0 shadow-sm">
                 <User className="h-4 w-4 text-[hsl(var(--text-muted))]" />
               </div>
               <div className="flex-1 min-w-0">
@@ -71,9 +71,9 @@ export function SettingsContent({ userName, userEmail }: SettingsContentProps) {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex items-start gap-3 p-4 rounded-[var(--radius-lg)] bg-[hsl(var(--surface))] border border-[hsl(var(--border))]"
+              className="flex items-start gap-3 p-4 rounded-[var(--radius-lg)] bg-[hsl(var(--surface))]/80 backdrop-blur-sm border border-[hsl(var(--border))] hover:shadow-md transition-all duration-300"
             >
-              <div className="h-9 w-9 rounded-lg bg-[hsl(var(--muted))] flex items-center justify-center flex-shrink-0">
+              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-[hsl(var(--muted))] to-[hsl(var(--cloud))] flex items-center justify-center flex-shrink-0 shadow-sm">
                 <Mail className="h-4 w-4 text-[hsl(var(--text-muted))]" />
               </div>
               <div className="flex-1 min-w-0">
@@ -94,10 +94,10 @@ export function SettingsContent({ userName, userEmail }: SettingsContentProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.2 }}
-        className="rounded-[var(--radius-xl)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))] to-[hsl(var(--cloud))] p-6 shadow-md overflow-hidden relative"
+        className="rounded-[var(--radius-xl)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))]/95 to-[hsl(var(--cloud))]/80 p-6 shadow-lg overflow-hidden relative backdrop-blur-sm hover:shadow-xl transition-all duration-300"
       >
         {/* Decorative gradient */}
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[hsl(var(--accent))]/5 to-[hsl(var(--brand-500))]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[hsl(var(--accent))]/8 to-[hsl(var(--brand-500))]/8 rounded-full blur-3xl" />
         
         <div className="relative">
           <div className="flex items-center gap-3 mb-6">

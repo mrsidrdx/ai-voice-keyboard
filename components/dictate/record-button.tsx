@@ -60,9 +60,10 @@ export function RecordButton({
       className={cn(
           "relative z-10 flex items-center justify-center rounded-full shadow-2xl",
           "transition-all duration-300 focus:outline-none focus-visible:ring-4",
+          "backdrop-blur-sm",
           isRecording
-            ? "h-32 w-32 sm:h-40 sm:w-40 bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--success))] focus-visible:ring-[hsl(var(--accent))]/30"
-            : "h-28 w-28 sm:h-36 sm:w-36 bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] focus-visible:ring-[hsl(var(--brand-500))]/30",
+            ? "h-32 w-32 sm:h-40 sm:w-40 bg-gradient-to-br from-[hsl(var(--accent))] via-[hsl(var(--success))] to-[hsl(var(--accent))]/80 focus-visible:ring-[hsl(var(--accent))]/30"
+            : "h-28 w-28 sm:h-36 sm:w-36 bg-gradient-to-br from-[hsl(var(--brand-500))] via-[hsl(var(--brand-400))] to-[hsl(var(--brand-600))] focus-visible:ring-[hsl(var(--brand-500))]/30",
           disabled && "opacity-50 cursor-not-allowed"
         )}
         whileHover={{ scale: disabled ? 1 : 1.05 }}
@@ -70,11 +71,11 @@ export function RecordButton({
         animate={{
           boxShadow: isRecording
             ? [
-                "0 20px 60px rgba(var(--accent), 0.3)",
-                "0 20px 80px rgba(var(--accent), 0.5)",
-                "0 20px 60px rgba(var(--accent), 0.3)",
+                "0 20px 60px rgba(160, 200, 120, 0.3), 0 0 40px rgba(160, 200, 120, 0.2)",
+                "0 20px 80px rgba(160, 200, 120, 0.5), 0 0 60px rgba(160, 200, 120, 0.3)",
+                "0 20px 60px rgba(160, 200, 120, 0.3), 0 0 40px rgba(160, 200, 120, 0.2)",
               ]
-            : "0 20px 60px rgba(var(--brand-500), 0.3)",
+            : "0 20px 60px rgba(89, 123, 237, 0.3), 0 10px 30px rgba(89, 123, 237, 0.2)",
         }}
         transition={{
           boxShadow: {
@@ -84,7 +85,17 @@ export function RecordButton({
           },
         }}
       >
-        {/* Glow effect */}
+        {/* Inner glow effect */}
+        <div
+          className={cn(
+            "absolute inset-2 rounded-full blur-2xl transition-opacity duration-500",
+        isRecording
+              ? "bg-[hsl(var(--accent))] opacity-60"
+              : "bg-[hsl(var(--brand-400))] opacity-40"
+          )}
+        />
+        
+        {/* Outer glow effect */}
         <div
           className={cn(
             "absolute inset-0 rounded-full blur-xl transition-opacity duration-300",

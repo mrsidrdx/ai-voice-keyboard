@@ -23,20 +23,20 @@ export function Sidebar() {
       initial={false}
       animate={{ width: isExpanded ? 260 : 72 }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      className="relative border-r border-border bg-surface/50 backdrop-blur-sm hidden md:block"
+      className="relative border-r border-[hsl(var(--border))]/60 bg-gradient-to-b from-[hsl(var(--surface))]/95 to-[hsl(var(--muted))]/80 backdrop-blur-xl hidden md:block shadow-lg"
     >
       <div className="sticky top-0 h-screen flex flex-col p-4">
         {/* Toggle Button */}
         <motion.button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="absolute -right-3 top-6 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-surface shadow-md hover:shadow-lg transition-shadow"
+          className="absolute -right-3 top-6 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--surface))] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
           {isExpanded ? (
-            <ChevronLeft className="h-3 w-3 text-text-muted" />
+            <ChevronLeft className="h-3 w-3 text-[hsl(var(--text-muted))]" />
           ) : (
-            <ChevronRight className="h-3 w-3 text-text-muted" />
+            <ChevronRight className="h-3 w-3 text-[hsl(var(--text-muted))]" />
           )}
         </motion.button>
 
@@ -56,24 +56,24 @@ export function Sidebar() {
               href={item.href}
               className={cn(
                     "group relative flex items-center gap-3 rounded-[14px] px-3 py-3 text-sm font-medium overflow-hidden",
-                    "transition-all duration-200",
+                    "transition-all duration-300",
                 isActive
-                      ? "bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] text-white shadow-md"
-                      : "text-[hsl(var(--text-muted))] hover:bg-[hsl(var(--muted))] hover:text-[hsl(var(--text))]"
+                      ? "bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] text-white shadow-lg shadow-[hsl(var(--brand-500))]/25"
+                      : "text-[hsl(var(--text-muted))] hover:bg-[hsl(var(--muted))]/80 hover:text-[hsl(var(--text))] hover:shadow-sm"
                   )}
                 >
                   {/* Active indicator */}
                   {isActive && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))]"
+                      className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] rounded-[14px]"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
                   
                   <Icon className={cn(
-                    "h-5 w-5 relative z-10 flex-shrink-0",
-                    isActive ? "text-white" : "group-hover:scale-110 transition-transform"
+                    "h-5 w-5 relative z-10 flex-shrink-0 transition-all duration-300",
+                    isActive ? "text-white drop-shadow-sm" : "group-hover:scale-110"
                   )} />
                   
                   <AnimatePresence mode="wait">

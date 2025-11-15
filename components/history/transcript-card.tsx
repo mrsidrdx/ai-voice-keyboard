@@ -49,13 +49,13 @@ export function TranscriptCard({
       transition={{ duration: 0.3 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative rounded-[var(--radius-lg)] border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-5 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden"
+      className="group relative rounded-[var(--radius-lg)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))]/95 to-[hsl(var(--muted))]/50 p-5 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden backdrop-blur-sm"
     >
       {/* Gradient overlay on hover */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 0.03 : 0 }}
-        className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--accent))] pointer-events-none"
+        animate={{ opacity: isHovered ? 0.05 : 0 }}
+        className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--accent))] pointer-events-none rounded-[var(--radius-lg)]"
       />
 
       {/* Header */}
@@ -68,17 +68,12 @@ export function TranscriptCard({
         </div>
 
         {/* Actions */}
-        <motion.div
-          initial={{ opacity: 0, x: 10 }}
-          animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 10 }}
-          transition={{ duration: 0.2 }}
-          className="flex gap-1"
-        >
+        <div className="flex gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-200">
             <Button
               variant="ghost"
               size="icon"
               onClick={handleCopy}
-            className="h-8 w-8 rounded-full hover:bg-[hsl(var(--brand-500))]/10 hover:text-[hsl(var(--brand-500))]"
+            className="h-8 w-8 rounded-full hover:bg-[hsl(var(--brand-500))]/10 hover:text-[hsl(var(--brand-500))] hover:scale-110 transition-all duration-200"
             >
             <Copy className="h-3.5 w-3.5" />
             </Button>
@@ -86,11 +81,11 @@ export function TranscriptCard({
               variant="ghost"
               size="icon"
               onClick={() => onDelete(id)}
-            className="h-8 w-8 rounded-full hover:bg-[hsl(var(--danger))]/10 hover:text-[hsl(var(--danger))]"
+            className="h-8 w-8 rounded-full hover:bg-[hsl(var(--danger))]/10 hover:text-[hsl(var(--danger))] hover:scale-110 transition-all duration-200"
             >
             <Trash2 className="h-3.5 w-3.5" />
             </Button>
-        </motion.div>
+        </div>
           </div>
 
       {/* Content */}

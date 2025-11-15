@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { DictionaryTable } from "@/components/dictionary/dictionary-table";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { ShimmerTable } from "@/components/ui/shimmer";
 
 type DictionaryItem = {
   id: string;
@@ -109,14 +109,7 @@ export default function DictionaryPage() {
 
       {/* Content */}
       {isLoading ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex flex-col items-center justify-center py-20 space-y-4"
-        >
-          <Loader2 className="h-8 w-8 animate-spin text-[hsl(var(--brand-500))]" />
-          <p className="text-sm text-[hsl(var(--text-muted))]">Loading dictionary...</p>
-        </motion.div>
+        <ShimmerTable rows={5} />
       ) : (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

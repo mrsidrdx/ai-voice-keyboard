@@ -20,7 +20,7 @@ export function Navbar({ userName }: NavbarProps) {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="sticky top-0 z-50 border-b border-[hsl(var(--border))]/40 bg-[hsl(var(--surface))]/80 backdrop-blur-md px-6 py-4"
+      className="sticky top-0 z-50 border-b border-[hsl(var(--border))]/60 bg-gradient-to-r from-[hsl(var(--surface))]/95 via-[hsl(var(--surface))]/98 to-[hsl(var(--surface))]/95 backdrop-blur-xl px-6 py-4 shadow-lg"
     >
       <div className="flex items-center justify-between max-w-[1400px] mx-auto">
         {/* Logo & Brand */}
@@ -29,10 +29,10 @@ export function Navbar({ userName }: NavbarProps) {
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--accent))] rounded-xl blur-md opacity-50" />
-            <div className="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] shadow-lg">
-              <Sparkles className="h-5 w-5 text-white" />
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--accent))] rounded-xl blur-lg opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+            <div className="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--brand-400))] shadow-lg group-hover:shadow-xl transition-all duration-300">
+              <Sparkles className="h-5 w-5 text-white drop-shadow-sm" />
             </div>
           </div>
           <div>
@@ -52,9 +52,9 @@ export function Navbar({ userName }: NavbarProps) {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="hidden sm:flex items-center gap-3 px-4 py-2 rounded-full bg-[hsl(var(--muted))]"
+              className="hidden sm:flex items-center gap-3 px-4 py-2 rounded-full bg-gradient-to-r from-[hsl(var(--muted))]/80 to-[hsl(var(--muted))]/60 backdrop-blur-sm border border-[hsl(var(--border))]/50 shadow-sm hover:shadow-md transition-all duration-300"
             >
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--accent))] flex items-center justify-center text-white text-sm font-semibold">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[hsl(var(--brand-500))] to-[hsl(var(--accent))] flex items-center justify-center text-white text-sm font-semibold shadow-md">
                 {userName.charAt(0).toUpperCase()}
               </div>
               <span className="text-sm font-medium text-[hsl(var(--text))]">

@@ -67,9 +67,9 @@ export default function DictatePage() {
         transition={{ duration: 0.4, delay: 0.1 }}
         className={cn(
           "relative overflow-hidden rounded-[var(--radius-xl)] border border-[hsl(var(--border))] p-8 sm:p-12",
-          "bg-gradient-to-br from-[hsl(var(--surface))] to-[hsl(var(--mist))]",
-          "shadow-lg transition-all duration-500",
-          isRecording && "shadow-2xl shadow-[hsl(var(--accent))]/20"
+          "bg-gradient-to-br from-[hsl(var(--surface))]/95 via-[hsl(var(--muted))]/50 to-[hsl(var(--surface))]/90",
+          "backdrop-blur-xl shadow-xl transition-all duration-500",
+          isRecording && "shadow-2xl shadow-[hsl(var(--accent))]/30 border-[hsl(var(--accent))]/30"
         )}
       >
         {/* Animated background gradient when recording */}
@@ -158,24 +158,24 @@ export default function DictatePage() {
                   variant="outline"
                   size="sm"
                   onClick={handleCopy}
-                  className="rounded-full gap-2"
+                  className="rounded-full gap-2 hover:scale-105 transition-transform duration-200"
                 >
                   <AnimatePresence mode="wait">
                     {copied ? (
                       <motion.div
                         key="check"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0, rotate: 180 }}
                       >
                         <Check className="h-4 w-4 text-[hsl(var(--success))]" />
                       </motion.div>
                     ) : (
                       <motion.div
                         key="copy"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0, rotate: 180 }}
                       >
                         <Copy className="h-4 w-4" />
                       </motion.div>
@@ -190,7 +190,7 @@ export default function DictatePage() {
                   variant="outline"
                   size="sm"
                   onClick={handleDownload}
-                  className="rounded-full gap-2"
+                  className="rounded-full gap-2 hover:scale-105 transition-transform duration-200"
                 >
                   <Download className="h-4 w-4" />
                   <span className="hidden sm:inline">Download</span>
@@ -200,7 +200,7 @@ export default function DictatePage() {
                   variant="outline"
                   size="sm"
                   onClick={handleClear}
-                  className="rounded-full gap-2 text-[hsl(var(--danger))] hover:text-[hsl(var(--danger))] hover:bg-[hsl(var(--danger))]/10"
+                  className="rounded-full gap-2 text-[hsl(var(--danger))] hover:text-[hsl(var(--danger))] hover:bg-[hsl(var(--danger))]/10 hover:scale-105 transition-all duration-200"
                 >
                   <Trash2 className="h-4 w-4" />
                   <span className="hidden sm:inline">Clear</span>
@@ -211,7 +211,7 @@ export default function DictatePage() {
           </div>
 
         {/* Transcript Display */}
-        <div className="relative rounded-[var(--radius-xl)] border border-[hsl(var(--border))] bg-[hsl(var(--surface))] shadow-md overflow-hidden">
+        <div className="relative rounded-[var(--radius-xl)] border border-[hsl(var(--border))] bg-gradient-to-br from-[hsl(var(--surface))]/95 to-[hsl(var(--muted))]/50 shadow-lg overflow-hidden backdrop-blur-sm hover:shadow-xl transition-all duration-300">
           <TranscriptDisplay
             value={transcript}
             onChange={setTranscript}

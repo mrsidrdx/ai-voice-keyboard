@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import { cn } from "@/lib/utils";
 
 type WaveformProps = {
   isRecording: boolean;
@@ -97,16 +98,28 @@ export function Waveform({
     <div className="flex items-center justify-center gap-1 h-20 px-4">
       {heights.map((height, i) => (
         <motion.div
-          key={i}
-          className="w-1 rounded-full bg-gradient-to-t from-[hsl(var(--brand-500))] to-[hsl(var(--accent))]"
+          key={`bar-${i}`}
+          className={cn(
+            "flex-1 rounded-full transition-colors duration-300",
+            isRecording
+              ? "bg-gradient-to-t from-[hsl(var(--accent))] via-[hsl(var(--success))] to-[hsl(var(--accent))]/50"
+              : "bg-gradient-to-t from-[hsl(var(--muted))] to-[hsl(var(--border))]"
+          )}
           style={{
             height: `${height * 100}%`,
+            maxHeight: "100%",
+            minHeight: "8%",
+            opacity: isRecording ? 0.8 + height * 0.2 : 0.3,
+            filter: isRecording ? `drop-shadow(0 0 ${height * 4}px hsl(var(--accent)))` : "none",
           }}
           animate={{
-            opacity: isRecording ? 0.8 : 0.3,
+            scaleY: [1, 1.02, 1],
           }}
           transition={{
-            opacity: { duration: 0.3 },
+            duration: 0.8,
+            repeat: Infinity,
+            delay: i * 0.02,
+            ease: "easeInOut",
           }}
         />
       ))}

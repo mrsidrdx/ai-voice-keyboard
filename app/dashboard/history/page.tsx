@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { TranscriptCard } from "@/components/history/transcript-card";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileText, Loader2 } from "lucide-react";
+import { FileText } from "lucide-react";
+import { ShimmerList } from "@/components/ui/shimmer";
 
 type Transcription = {
   id: string;
@@ -70,14 +71,7 @@ export default function HistoryPage() {
       {/* Content */}
       <div className="space-y-4">
       {isLoading ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col items-center justify-center py-20 space-y-4"
-          >
-            <Loader2 className="h-8 w-8 animate-spin text-[hsl(var(--brand-500))]" />
-            <p className="text-sm text-[hsl(var(--text-muted))]">Loading your transcriptions...</p>
-          </motion.div>
+          <ShimmerList items={3} />
       ) : transcriptions.length === 0 ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
